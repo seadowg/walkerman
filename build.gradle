@@ -23,6 +23,7 @@ dependencies {
 
   compile 'org.jetbrains.kotlin:kotlin-stdlib:0.10.195'
   compile 'com.sparkjava:spark-core:2.1'
+  compile 'com.github.spullara.mustache.java:compiler:0.9.0'
 
   testCompile 'junit:junit:4.11'
   testCompile 'org.fluentlenium:fluentlenium-core:0.10.3'

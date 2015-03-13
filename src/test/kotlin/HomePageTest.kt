@@ -20,11 +20,6 @@ class HomePageTest : FluentTest() {
         SparkBase.stop();
     }
 
-    Test fun showsDate() {
-        goTo("http://localhost:9000")
-        assertThat(pageSource()).contains("6/6/2015")
-    }
-
     override fun getDefaultDriver(): WebDriver? {
         return HtmlUnitDriver()
     }

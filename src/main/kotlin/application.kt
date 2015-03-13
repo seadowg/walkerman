@@ -5,21 +5,13 @@ import spark.SparkBase.port
 import spark.SparkBase.staticFileLocation;
 import com.github.mustachejava.DefaultMustacheFactory
 import java.io.StringWriter
+import com.seadowg.walkerman.router.loadRoutes
 
 public fun main(args: Array<String>) {
-  val portString = System.getenv().get("PORT") ?: "9000";
-
-  port(Integer.parseInt(portString))
+  port(Integer.parseInt(System.getenv().get("PORT") ?: "9000"))
   staticFileLocation("public")
 
-  get("/", { req, res ->
-    val mustacheFactory = DefaultMustacheFactory()
-    val mustache = mustacheFactory.compile("index.mustache")
-    val stringWriter = StringWriter()
-
-    mustache.execute(stringWriter, null).close();
-    stringWriter.toString()
-  })
+  loadRoutes()
 }
 
 

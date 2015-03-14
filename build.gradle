@@ -27,6 +27,5 @@ dependencies {
 
   testCompile 'junit:junit:4.11'
   testCompile 'org.fluentlenium:fluentlenium-core:0.10.3'
-  testCompile 'net.sourceforge.htmlunit:htmlunit:2.4'
   testCompile 'org.assertj:assertj-core:2.0.0'
 }

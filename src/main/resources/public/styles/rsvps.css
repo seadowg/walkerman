@@ -1,0 +1,26 @@
+body {
+    margin-top: 240px;
+}
+
+.rsvp_form_container {
+    max-width: 480px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    border-style: solid;
+    border-color: white;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    margin: 0px auto;
+    text-align: center;
+}
+
+.rsvp_form {
+    margin: auto;
+    text-align: left;
+    max-width: 240px;
+}
+
+.rsvp_form input {
+    width: 100%;
+}

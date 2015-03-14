@@ -11,7 +11,10 @@
 
 body {
     background-image: url("/images/background.png");
-    text-align: center;
     font-family: 'bellotaregular';
     color: white;
+}
+
+.center {
+    text-align: center;
 }

@@ -1,0 +1,15 @@
+body {
+    text-align: center;
+}
+
+#create_rsvp {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5em;
+}
+
+#create_rsvp:hover {
+    color: grey;
+    text-decoration: none;
+    font-size: 1.5em;
+}

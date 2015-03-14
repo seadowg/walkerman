@@ -11,13 +11,21 @@ import spark.SparkBase
 import org.junit.BeforeClass
 import org.junit.AfterClass
 
-class HomePageTest : FluentTest() {
+class RsvpTest : FluentTest() {
     Before fun setup() {
         com.seadowg.walkerman.main(array<String>())
     }
 
     After fun teardown() {
         SparkBase.stop();
+    }
+
+    Test fun canRsvp() {
+        goTo("http://localhost:9000")
+        click("#create_rsvp")
+        fill("#rsvp_email").with("mike@fassbender.com")
+        submit("#rsvp_submit");
+        assertThat(pageSource()).contains("Thank you")
     }
 
     override fun getDefaultDriver(): WebDriver? {

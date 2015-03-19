@@ -1,4 +1,4 @@
-package com.seadowg.walkerman.routing
+package com.seadowg.walkerman.server
 
 import spark.Spark.get
 import spark.Spark.post
@@ -10,6 +10,13 @@ import com.seadowg.walkerman.rsvp.RsvpController
 import java.net.URLDecoder.decode;
 import spark.Request
 import com.seadowg.walkerman.http.NiceRequest
+import spark.SparkBase.port
+import spark.SparkBase.staticFileLocation
+
+fun configure() {
+    port(Integer.parseInt(System.getenv().get("PORT") ?: "9000"))
+    staticFileLocation("public")
+}
 
 fun loadRoutes() {
     get("/", { req, res ->

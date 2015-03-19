@@ -5,13 +5,11 @@ import spark.SparkBase.port
 import spark.SparkBase.staticFileLocation;
 import com.github.mustachejava.DefaultMustacheFactory
 import java.io.StringWriter
-import com.seadowg.walkerman.routing.loadRoutes
+import com.seadowg.walkerman.server
 
 public fun main(args: Array<String>) {
-  port(Integer.parseInt(System.getenv().get("PORT") ?: "9000"))
-  staticFileLocation("public")
-
-  loadRoutes()
+  server.configure()
+  server.loadRoutes()
 }
 
 

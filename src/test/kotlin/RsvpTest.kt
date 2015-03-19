@@ -13,7 +13,7 @@ import org.junit.AfterClass
 
 class RsvpTest : FluentTest() {
     Before fun setup() {
-        com.seadowg.walkerman.main(array<String>())
+        com.seadowg.walkerman.application.main(array<String>())
     }
 
     After fun teardown() {
@@ -23,9 +23,12 @@ class RsvpTest : FluentTest() {
     Test fun canRsvp() {
         goTo("http://localhost:9000")
         click("#create_rsvp")
-        fill("#rsvp_email").with("mike@fassbender.com")
+        fill("#rsvp_email").with("michael@fassbender.com")
         submit("#rsvp_submit");
         assertThat(pageSource()).contains("Thank you")
+
+        goTo("http://localhost:9000/rsvps.csv")
+        assertThat(pageSource()).contains("michael@fassbender.com")
     }
 
     override fun getDefaultDriver(): WebDriver? {

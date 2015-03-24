@@ -10,6 +10,7 @@ import com.seadowg.walkerman.database
 
 public fun main(args: Array<String>) {
   database.configure()
+  database.migrate()
 
   server.configure()
   server.loadRoutes()

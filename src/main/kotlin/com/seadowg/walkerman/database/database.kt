@@ -9,11 +9,6 @@ import org.flywaydb.core.Flyway
 val dataSource = PGPoolingDataSource()
 
 fun configure(): Unit {
-    connect()
-    migrate()
-}
-
-private fun connect(): Unit {
     val dbUri = URI.create(elephantSqlUriString(System.getenv()) ?: "postgres://localhost:5432/walkerman")
     dataSource.setUrl("jdbc:postgresql://${dbUri.getHost()}:${dbUri.getPort()}${dbUri.getPath()}")
 
@@ -23,7 +18,7 @@ private fun connect(): Unit {
     }
 }
 
-private fun migrate(): Unit {
+fun migrate(): Unit {
     val flyway = Flyway();
     flyway.setDataSource(dataSource)
     flyway.migrate()

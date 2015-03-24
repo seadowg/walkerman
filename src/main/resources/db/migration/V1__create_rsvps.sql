@@ -1,0 +1,3 @@
+CREATE TABLE rsvps(
+    email TEXT PRIMARY KEY
+);

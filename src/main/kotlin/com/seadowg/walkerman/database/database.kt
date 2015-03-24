@@ -2,20 +2,28 @@ package com.seadowg.walkerman.database
 
 import org.postgresql.ds.PGPoolingDataSource
 import org.json.JSONObject
+import javax.sql.DataSource
+import java.net.URI
 
 val dataSource = PGPoolingDataSource()
 
 fun configure(): Unit {
-    val env = System.getenv()
+    val dbUri = URI.create(elephantSqlUriString(System.getenv()) ?: "postgres://localhost:5432/walkerman")
+    dataSource.setUrl("jdbc:postgresql://${dbUri.getHost()}:${dbUri.getPort()}${dbUri.getPath()}")
 
+    if (dbUri.getUserInfo() != null) {
+        dataSource.setUser(dbUri.getUserInfo().split(":").get(0))
+        dataSource.setPassword(dbUri.getUserInfo().split(":").get(1))
+    }
+}
+
+private fun elephantSqlUriString(env: Map<String, String>): String? {
     if (env.containsKey("VCAP_SERVICES")) {
         val vcapServices = JSONObject(env.get("VCAP_SERVICES"))
         val postgres = vcapServices.getJSONArray("elephantsql")?.getJSONObject(0)
-        val uri = postgres?.getJSONObject("credentials")?.getString("uri")
-
-        if (uri != null) dataSource.setUrl(uri)
+        return postgres?.getJSONObject("credentials")?.getString("uri")
     } else {
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/walkerman")
+        return null
     }
 }
 

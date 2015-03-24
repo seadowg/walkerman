@@ -29,6 +29,7 @@ dependencies {
   compile 'com.github.spullara.mustache.java:compiler:0.9.0'
   compile 'org.postgresql:postgresql:9.4-1201-jdbc41'
   compile 'org.jdbi:jdbi:2.59'
+  compile 'org.json:json:20141113'
 
   testCompile 'junit:junit:4.11'
   testCompile 'org.fluentlenium:fluentlenium-core:0.10.3'

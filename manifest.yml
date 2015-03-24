@@ -1,4 +1,4 @@
 name: walkerman
-path: build/libs/walkerman-all.jar
+path: build/distributions/walkerman.zip
 services:
     - walkerman

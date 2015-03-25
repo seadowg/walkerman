@@ -13,36 +13,38 @@ import com.seadowg.walkerman.http.NiceRequest
 import spark.SparkBase.port
 import spark.SparkBase.staticFileLocation
 
-fun configure() {
-    port(Integer.parseInt(System.getenv().get("PORT") ?: "9000"))
-    staticFileLocation("public")
-}
+class Server(val port: Int) {
+    {
+        port(Integer.parseInt(System.getenv().get("PORT") ?: "9000"))
+        staticFileLocation("public")
+    }
 
-fun loadRoutes() {
-    get("/", { req, res ->
-        renderTemplate("home")
-    })
+    fun loadRoutes() {
+        get("/", { req, res ->
+            renderTemplate("home")
+        })
 
-    get("/rsvps/new", { req, res ->
-        RsvpController(res).new()
-    })
+        get("/rsvps/new", { req, res ->
+            RsvpController(res).new()
+        })
 
-    post("/rsvps", { req, res ->
-        val request = NiceRequest(req)
-        val email = request.params().get("rsvp_email")
+        post("/rsvps", { req, res ->
+            val request = NiceRequest(req)
+            val email = request.params().get("rsvp_email")
 
-        if (email != null) {
-            RsvpController(res).create(email)
-        }
+            if (email != null) {
+                RsvpController(res).create(email)
+            }
 
-        res.redirect("/rsvps/success")
-    })
+            res.redirect("/rsvps/success")
+        })
 
-    get("/rsvps/success", { req, res ->
-        RsvpController(res).createSuccess()
-    })
+        get("/rsvps/success", { req, res ->
+            RsvpController(res).createSuccess()
+        })
 
-    get("/rsvps.csv", { req, res ->
-        RsvpController(res).csvIndex()
-    })
+        get("/rsvps.csv", { req, res ->
+            RsvpController(res).csvIndex()
+        })
+    }
 }

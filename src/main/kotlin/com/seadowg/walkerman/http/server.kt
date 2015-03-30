@@ -30,10 +30,12 @@ class Server(val port: Int) {
 
         post("/rsvps", { req, res ->
             val request = NiceRequest(req)
-            val email = request.params().get("rsvp_email")
+            val params = request.params()
+            val email = params.get("rsvp_email")
+            val name = params.get("rsvp_name")
 
-            if (email != null) {
-                RsvpController(res).create(email)
+            if (email != null && name != null) {
+                RsvpController(res).create(email, name)
             }
 
             res.redirect("/rsvps/success")

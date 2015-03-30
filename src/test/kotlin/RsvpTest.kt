@@ -16,14 +16,14 @@ import org.skife.jdbi.v2.DBI
 
 class RsvpTest : FluentTest() {
     Before fun setup() {
+        com.seadowg.walkerman.application.main(array<String>())
+
         val dataSource = PGPoolingDataSource()
         dataSource.setUrl("jdbc:postgresql://localhost:5432/walkerman")
 
         DBI(dataSource).open().use { db ->
             db.createStatement("delete from rsvps").execute()
         }
-
-        com.seadowg.walkerman.application.main(array<String>())
     }
 
     After fun teardown() {
@@ -31,14 +31,18 @@ class RsvpTest : FluentTest() {
     }
 
     Test fun canRsvp() {
+        var email = "michael@fassbender.com"
+        var name = "Michael Fassbender"
+
         goTo("http://localhost:9000")
         click("#create_rsvp")
-        fill("#rsvp_email").with("michael@fassbender.com")
+        fill("#rsvp_email").with(email)
+        fill("#rsvp_name").with(name)
         submit("#rsvp_submit");
-        assertThat(pageSource()).contains("Thank you")
 
         goTo("http://localhost:9000/rsvps.csv")
-        assertThat(pageSource()).contains("michael@fassbender.com")
+        assertThat(pageSource()).contains(email)
+        assertThat(pageSource()).contains(name)
     }
 
     override fun getDefaultDriver(): WebDriver? {

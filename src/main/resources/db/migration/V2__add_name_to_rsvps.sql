@@ -1,0 +1,1 @@
+ALTER TABLE rsvps ADD name TEXT NOT NULL;

@@ -6,7 +6,9 @@ import com.seadowg.walkerman.database.dataSource
 
 class RsvpController(val response: Response) {
     fun csvIndex(): String {
-        val rsvps = RsvpRepository(dataSource).fetchAll().map { email -> mapOf("email" to email) }
+        val rsvps = RsvpRepository(dataSource).fetchAll().map { rsvp ->
+            mapOf("email" to rsvp.email, "name" to rsvp.name)
+        }
 
         response.type("text/csv")
         return mustache.renderTemplate("rsvps", mapOf("rsvps" to rsvps))
@@ -16,8 +18,8 @@ class RsvpController(val response: Response) {
         return mustache.renderTemplate("rsvps_new")
     }
 
-    fun create(email: String): Unit {
-        RsvpRepository(dataSource).create(email)
+    fun create(email: String, name: String): Unit {
+        RsvpRepository(dataSource).create(email, name)
         response.redirect("/rsvps/success")
     }
 

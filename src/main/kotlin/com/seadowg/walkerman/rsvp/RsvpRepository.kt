@@ -9,18 +9,19 @@ import org.skife.jdbi.v2.Handle
 import javax.sql.DataSource
 
 class RsvpRepository(val dataSource: DataSource) {
-    fun create(email: String): Unit {
+    fun create(email: String, name: String): Unit {
         dbConnection().use { db ->
-            db.createStatement("insert into rsvps (email) values (:email)")
+            db.createStatement("insert into rsvps (email, name) values (:email, :name)")
                     .bind("email", email)
+                    .bind("name", name)
                     .execute()
         }
     }
 
-    fun fetchAll(): List<String> {
+    fun fetchAll(): List<Rsvp> {
         return dbConnection().use { db ->
             db.createQuery("select * from rsvps").toList().map { rsvp ->
-                rsvp.get("email") as String
+                Rsvp(rsvp.get("email") as String, rsvp.get("name") as String)
             }
         }
     }

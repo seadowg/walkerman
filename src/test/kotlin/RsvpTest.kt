@@ -33,16 +33,20 @@ class RsvpTest : FluentTest() {
     Test fun canRsvp() {
         var email = "michael@fassbender.com"
         var name = "Michael Fassbender"
+        var guests = "5"
 
         goTo("http://localhost:9000")
         click("#create_rsvp")
         fill("#rsvp_email").with(email)
         fill("#rsvp_name").with(name)
+        fill("#rsvp_guests").with(guests)
         submit("#rsvp_submit");
 
         goTo("http://localhost:9000/rsvps.csv")
-        assertThat(pageSource()).contains(email)
-        assertThat(pageSource()).contains(name)
+        val csv = pageSource()
+        assertThat(csv).contains(email)
+        assertThat(csv).contains(name)
+        assertThat(csv).contains(guests)
     }
 
     override fun getDefaultDriver(): WebDriver? {

@@ -1,5 +1,5 @@
 body {
-    margin-top: 200px;
+    margin-top: 160px;
 }
 
 .rsvp_form_container {
@@ -23,4 +23,8 @@ body {
 
 .rsvp_form input {
     width: 100%;
+}
+
+.rsvp_form input#rsvp_guests {
+    width: 40px;
 }

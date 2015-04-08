@@ -22,7 +22,6 @@ class Database(val uri: String, val userInfo: UserInfo?) {
     fun migrate(): Unit {
         val flyway = Flyway();
         flyway.setDataSource(dataSource)
-        flyway.clean()
         flyway.migrate()
     }
 }

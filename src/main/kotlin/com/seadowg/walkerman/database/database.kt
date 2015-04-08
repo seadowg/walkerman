@@ -10,7 +10,7 @@ import com.seadowg.walkerman.database.UserInfo
 val dataSource = PGPoolingDataSource()
 
 class Database(val uri: String, val userInfo: UserInfo?) {
-    {
+    init {
         dataSource.setUrl(uri)
 
         if (userInfo != null) {

@@ -14,7 +14,7 @@ import spark.SparkBase.port
 import spark.SparkBase.staticFileLocation
 
 class Server(val port: Int) {
-    {
+    init {
         port(Integer.parseInt(System.getenv().get("PORT") ?: "9000"))
         staticFileLocation("public")
     }

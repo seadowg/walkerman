@@ -9,12 +9,12 @@ import org.skife.jdbi.v2.Handle
 import javax.sql.DataSource
 
 class RsvpRepository(val dataSource: DataSource) {
-    fun create(email: String, name: String, guests: Int): Unit {
+    fun create(email: String, name: String, extraGuests: Int): Unit {
         dbConnection().use { db ->
             db.createStatement("insert into rsvps (email, name, guests) values (:email, :name, :guests)")
                     .bind("email", email)
                     .bind("name", name)
-                    .bind("guests", guests)
+                    .bind("guests", 1 + extraGuests)
                     .execute()
         }
     }

@@ -18,3 +18,15 @@ body {
 .center {
     text-align: center;
 }
+
+.right {
+    text-align: right;
+}
+
+.fill {
+    width: 100%;
+}
+
+.hidden {
+    display: none;
+}

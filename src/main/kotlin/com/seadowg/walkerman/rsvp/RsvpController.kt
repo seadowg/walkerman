@@ -18,8 +18,8 @@ class RsvpController(val response: Response) {
         return mustache.renderTemplate("rsvps_new")
     }
 
-    fun create(email: String, name: String, guests: Int): Unit {
-        RsvpRepository(dataSource).create(email, name, guests)
+    fun create(email: String, name: String, extraGuests: Int): Unit {
+        RsvpRepository(dataSource).create(email, name, extraGuests)
         response.redirect("/rsvps/success")
     }
 

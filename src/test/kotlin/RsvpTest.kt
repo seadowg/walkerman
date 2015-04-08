@@ -31,25 +31,71 @@ class RsvpTest : FluentTest() {
     }
 
     Test fun canRsvp() {
-        var email = "michael@fassbender.com"
-        var name = "Michael Fassbender"
-        var guests = "5"
+        val email = "michael@fassbender.com"
+        val name = "Michael Fassbender"
 
         goTo("http://localhost:9000")
         click("#create_rsvp")
         fill("#rsvp_email").with(email)
         fill("#rsvp_name").with(name)
-        fill("#rsvp_guests").with(guests)
         submit("#rsvp_submit");
 
         goTo("http://localhost:9000/rsvps.csv")
         val csv = pageSource()
         assertThat(csv).contains(email)
         assertThat(csv).contains(name)
-        assertThat(csv).contains(guests)
+        assertThat(csv).contains("1")
+    }
+
+    Test fun canRsvp_withGuests() {
+        val email = "gatecrasher@fassbender.com"
+        val name = "Gate Crasher"
+        val guests = 4
+
+        goTo("http://localhost:9000")
+        click("#create_rsvp")
+        fill("#rsvp_email").with(email)
+        fill("#rsvp_name").with(name)
+
+        find("#rsvp_guests_yes").click()
+        fill("#rsvp_guests").with(guests.toString())
+
+        submit("#rsvp_submit");
+
+        goTo("http://localhost:9000/rsvps.csv")
+        val csv = pageSource()
+        assertThat(csv).contains(email)
+        assertThat(csv).contains(name)
+        assertThat(csv).contains((guests + 1).toString())
+    }
+
+    Test fun whenChoosingNotToBringGuests_itDoesNotAddPreviouslyAddedGuests() {
+        val email = "billynomates@fassbender.com"
+        val name = "Billy No-Mates"
+        val guests = 7
+
+        goTo("http://localhost:9000")
+        click("#create_rsvp")
+        fill("#rsvp_email").with(email)
+        fill("#rsvp_name").with(name)
+
+        find("#rsvp_guests_yes").click()
+        fill("#rsvp_guests").with(guests.toString())
+
+        find("#rsvp_guests_no").click()
+
+        submit("#rsvp_submit");
+
+        goTo("http://localhost:9000/rsvps.csv")
+        val csv = pageSource()
+        assertThat(csv).contains(email)
+        assertThat(csv).contains(name)
+        assertThat(csv).contains("1")
     }
 
     override fun getDefaultDriver(): WebDriver? {
-        return HtmlUnitDriver()
+        val htmlUnitDriver = HtmlUnitDriver()
+        htmlUnitDriver.setJavascriptEnabled(true)
+        return htmlUnitDriver
     }
 }

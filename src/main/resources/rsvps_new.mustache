@@ -2,26 +2,52 @@
 <html>
 <head>
     <title>Walkerman - 6/6/15</title>
+    <link rel="stylesheet" type="text/css" href="/styles/forms.css"/>
     <link rel="stylesheet" type="text/css" href="/styles/app.css"/>
     <link rel="stylesheet" type="text/css" href="/styles/rsvps.css"/>
-    <link rel="stylesheet" type="text/css" href="/styles/forms.css"/>
+
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("[name=rsvp_guests_yes]").click(function() {
+                if (this.value === "true") {
+                    $("#rsvp_guests_form").show();
+                } else {
+                     $("#rsvp_guests_form").hide();
+                }
+            });
+        });
+    </script>
 </head>
 <body>
     <div class="rsvp_form_container">
         <form action="/rsvps" method="post" class="pure-form pure-form-stacked rsvp_form">
             <fieldset>
                 <label for="email">Email</label>
-                <input type="email" placeholder="Email" id="rsvp_email" name="rsvp_email">
+                <input type="email" placeholder="Email" id="rsvp_email" name="rsvp_email" class="fill">
             </fieldset>
 
             <fieldset>
                 <label for="name">Name</label>
-                <input type="text" placeholder="Name" id="rsvp_name" name="rsvp_name">
+                <input type="text" placeholder="Name" id="rsvp_name" name="rsvp_name" class="fill">
             </fieldset>
 
             <fieldset>
-                <label for="people">Number of guests</label>
-                <input type="number" id="rsvp_guests" name="rsvp_guests" min="1" max="6" value="1">
+                <legend>Are you bringing anyone else?</legend>
+                <label for="rsvp_guests_yes" class="pure-radio">
+                    <input type="radio" name="rsvp_guests_yes" id="rsvp_guests_yes" value="true">
+                    Yes
+                </label>
+
+                <label for="rsvp_guests_no" class="pure-radio">
+                    <input type="radio" name="rsvp_guests_yes" id="rsvp_guests_no" value="false" checked>
+                    No
+                </label>
+
+                <div id="rsvp_guests_form" class="hidden">
+                    <label for="people">Number of extra people</label>
+                    <input type="number" id="rsvp_guests" name="rsvp_guests" min="0" max="6" value="0">
+                </div>
             </fieldset>
 
             <fieldset>

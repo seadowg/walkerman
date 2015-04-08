@@ -34,10 +34,16 @@ class Server(val port: Int) {
             val params = request.params()
             val email = params.get("rsvp_email")
             val name = params.get("rsvp_name")
-            val guests = Integer.parseInt(params.get("rsvp_guests"))
+            val areExtraGuests = params.get("rsvp_guests_yes") == "true"
+
+            val extraGuests = if (areExtraGuests) {
+                Integer.parseInt(params.get("rsvp_guests"))
+            } else {
+                0
+            }
 
             if (email != null && name != null) {
-                RsvpController(res).create(email, name, guests)
+                RsvpController(res).create(email, name, extraGuests)
             }
 
             res.redirect("/rsvps/success")

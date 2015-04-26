@@ -37,7 +37,7 @@ class Server(val port: Int) {
             val areExtraGuests = params.get("rsvp_guests_yes") == "true"
 
             val extraGuests = if (areExtraGuests) {
-                Integer.parseInt(params.get("rsvp_guests"))
+                Integer.parseInt(params.get("rsvp_guests") ?: "0")
             } else {
                 0
             }

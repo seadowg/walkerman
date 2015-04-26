@@ -19,11 +19,21 @@ class RsvpController(val response: Response) {
     }
 
     fun create(email: String, name: String, extraGuests: Int): Unit {
-        RsvpRepository(dataSource).create(email, name, extraGuests)
-        response.redirect("/rsvps/success")
+        val rsvpRepository = RsvpRepository(dataSource)
+
+        if (rsvpRepository.exists(email)) {
+            response.redirect("/rsvps/email_exists_error")
+        } else {
+            rsvpRepository.create(email, name, extraGuests)
+            response.redirect("/rsvps/success")
+        }
     }
 
     fun createSuccess(): String {
         return mustache.renderTemplate("rsvps_create")
+    }
+
+    fun emailExistsError(): String {
+        return mustache.renderTemplate("rsvps_email_exists_error")
     }
 }

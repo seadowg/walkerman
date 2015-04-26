@@ -93,6 +93,25 @@ class RsvpTest : FluentTest() {
         assertThat(csv).contains("1")
     }
 
+    Test fun whenEmailAlreadyUsed_itShowsTheUserAnerror() {
+        val email = "repeatoffender@forgetful.com"
+        val name = "James Forgetful"
+
+        goTo("http://localhost:9000")
+        click("#create_rsvp")
+        fill("#rsvp_email").with(email)
+        fill("#rsvp_name").with(name)
+        submit("#rsvp_submit");
+
+        goTo("http://localhost:9000")
+        click("#create_rsvp")
+        fill("#rsvp_email").with(email)
+        fill("#rsvp_name").with(name)
+        submit("#rsvp_submit");
+
+        assertThat(pageSource()).contains("already RSVP'd with that email")
+    }
+
     override fun getDefaultDriver(): WebDriver? {
         val htmlUnitDriver = HtmlUnitDriver()
         htmlUnitDriver.setJavascriptEnabled(true)

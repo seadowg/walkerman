@@ -9,6 +9,15 @@ import org.skife.jdbi.v2.Handle
 import javax.sql.DataSource
 
 class RsvpRepository(val dataSource: DataSource) {
+
+    fun exists(email: String): Boolean {
+        return dbConnection().use { db ->
+            db.createQuery("select * from rsvps where email=:email")
+                    .bind("email", email)
+                    .count() > 0
+        }
+    }
+
     fun create(email: String, name: String, extraGuests: Int): Unit {
         dbConnection().use { db ->
             db.createStatement("insert into rsvps (email, name, guests) values (:email, :name, :guests)")

@@ -53,6 +53,10 @@ class Server(val port: Int) {
             RsvpController(res).createSuccess()
         })
 
+        get("/rsvps/email_exists_error", { req, res ->
+            RsvpController(res).emailExistsError()
+        })
+
         get("/rsvps.csv", { req, res ->
             RsvpController(res).csvIndex()
         })

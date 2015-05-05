@@ -1,3 +1,4 @@
+import com.seadowg.walkerman.application.main
 import org.junit.Before
 import org.junit.After
 import org.junit.Test
@@ -16,14 +17,8 @@ import org.skife.jdbi.v2.DBI
 
 class CreatingRsvpTest : FluentTest() {
     Before fun setup() {
-        com.seadowg.walkerman.application.main(array<String>())
-
-        val dataSource = PGPoolingDataSource()
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/walkerman")
-
-        DBI(dataSource).open().use { db ->
-            db.createStatement("delete from rsvps").execute()
-        }
+        bootWalkermanApp()
+        clearDatabase()
     }
 
     After fun teardown() {
@@ -102,6 +97,19 @@ class CreatingRsvpTest : FluentTest() {
         val page = createPage(javaClass<RsvpsCsv>())
         page.go()
         return page
+    }
+
+    private fun clearDatabase() {
+        val dataSource = PGPoolingDataSource()
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/walkerman")
+
+        DBI(dataSource).open().use { db ->
+            db.createStatement("delete from rsvps").execute()
+        }
+    }
+
+    private fun bootWalkermanApp() {
+        main(array<String>())
     }
 
     override fun getDefaultDriver(): WebDriver? {

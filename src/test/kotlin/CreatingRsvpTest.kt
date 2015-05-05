@@ -84,7 +84,7 @@ class CreatingRsvpTest : FluentTest() {
         secondNewRsvpPage.fillInNameAndEmail(email, name)
         secondNewRsvpPage.submit()
 
-        assertThat(pageSource()).contains("already RSVP'd with that email")
+        assertThat(secondNewRsvpPage.pageSource()).contains("already RSVP'd with that email")
     }
 
     private fun onTheNewRsvpPage(): NewRsvpPage {

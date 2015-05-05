@@ -1,21 +1,20 @@
-import com.seadowg.walkerman.application.main
-import org.junit.Before
-import org.junit.After
-import org.junit.Test
+package com.seadowg.walkerman.test
 
+import com.seadowg.walkerman.application.main
+import com.seadowg.walkerman.test.page.NewRsvpPage
+import com.seadowg.walkerman.test.page.RsvpsCsv
 import org.fluentlenium.adapter.FluentTest
-import kotlin.test.assertTrue
+import org.junit.After
+import org.junit.Before
+import org.junit.Test
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
-import org.assertj.core.api.Assertions.*
-import spark.SparkBase
-import org.junit.BeforeClass
-import org.junit.AfterClass
-import java.sql.DriverManager
 import org.postgresql.ds.PGPoolingDataSource
 import org.skife.jdbi.v2.DBI
+import spark.SparkBase
+import org.assertj.core.api.Assertions.*;
 
-class CreatingRsvpTest : FluentTest() {
+class CreatingRsvpsTest : FluentTest() {
     Before fun setup() {
         bootWalkermanApp()
         clearDatabase()
@@ -34,9 +33,7 @@ class CreatingRsvpTest : FluentTest() {
         newRsvpPage.submit();
 
         val csv = onThRsvpsCsv().pageSource();
-        assertThat(csv).contains(email)
-        assertThat(csv).contains(name)
-        assertThat(csv).contains("1")
+        assertThat(csv).contains(email, name, "1")
     }
 
     Test fun canRsvp_withGuests() {
@@ -50,9 +47,7 @@ class CreatingRsvpTest : FluentTest() {
         newRsvpPage.submit()
 
         val csv = onThRsvpsCsv().pageSource();
-        assertThat(csv).contains(email)
-        assertThat(csv).contains(name)
-        assertThat(csv).contains((guests + 1).toString())
+        assertThat(csv).contains(email, name, (guests + 1).toString())
     }
 
     Test fun whenChoosingNotToBringGuests_itDoesNotAddPreviouslyAddedGuests() {
@@ -67,9 +62,7 @@ class CreatingRsvpTest : FluentTest() {
         newRsvpPage.submit()
 
         val csv = onThRsvpsCsv().pageSource();
-        assertThat(csv).contains(email)
-        assertThat(csv).contains(name)
-        assertThat(csv).contains("1")
+        assertThat(csv).contains(email, name, "1")
     }
 
     Test fun whenEmailAlreadyUsed_itShowsTheUserAnerror() {

@@ -1,3 +1,4 @@
+package com.seadowg.walkerman.test.page
 
 import org.fluentlenium.core.FluentPage
 
@@ -6,4 +7,3 @@ class RsvpsCsv : FluentPage() {
         return "http://localhost:9000/rsvps.csv"
     }
 }
-

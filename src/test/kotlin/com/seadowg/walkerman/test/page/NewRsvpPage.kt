@@ -1,3 +1,4 @@
+package com.seadowg.walkerman.test.page
 
 import org.fluentlenium.core.FluentPage
 

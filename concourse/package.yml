@@ -6,4 +6,4 @@ inputs:
   - name: walkerman
 
 run:
-  path: walkerman/concourse/deploy
+  path: walkerman/concourse/package

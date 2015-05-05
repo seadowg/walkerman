@@ -14,7 +14,7 @@ import java.sql.DriverManager
 import org.postgresql.ds.PGPoolingDataSource
 import org.skife.jdbi.v2.DBI
 
-class RsvpTest : FluentTest() {
+class CreatingRsvpTest : FluentTest() {
     Before fun setup() {
         com.seadowg.walkerman.application.main(array<String>())
 
@@ -38,8 +38,7 @@ class RsvpTest : FluentTest() {
         newRsvpPage.fillInNameAndEmail(email, name)
         newRsvpPage.submit();
 
-        goTo("http://localhost:9000/rsvps.csv")
-        val csv = pageSource()
+        val csv = onThRsvpsCsv().pageSource();
         assertThat(csv).contains(email)
         assertThat(csv).contains(name)
         assertThat(csv).contains("1")
@@ -55,8 +54,7 @@ class RsvpTest : FluentTest() {
         newRsvpPage.addExtraGuests(guests)
         newRsvpPage.submit()
 
-        goTo("http://localhost:9000/rsvps.csv")
-        val csv = pageSource()
+        val csv = onThRsvpsCsv().pageSource();
         assertThat(csv).contains(email)
         assertThat(csv).contains(name)
         assertThat(csv).contains((guests + 1).toString())
@@ -73,8 +71,7 @@ class RsvpTest : FluentTest() {
         newRsvpPage.removeExtraGuests()
         newRsvpPage.submit()
 
-        goTo("http://localhost:9000/rsvps.csv")
-        val csv = pageSource()
+        val csv = onThRsvpsCsv().pageSource();
         assertThat(csv).contains(email)
         assertThat(csv).contains(name)
         assertThat(csv).contains("1")
@@ -96,9 +93,15 @@ class RsvpTest : FluentTest() {
     }
 
     private fun onTheNewRsvpPage(): NewRsvpPage {
-        val newRsvpPage = createPage(javaClass<NewRsvpPage>())
-        newRsvpPage.go()
-        return newRsvpPage
+        val page = createPage(javaClass<NewRsvpPage>())
+        page.go()
+        return page
+    }
+
+    private fun onThRsvpsCsv(): RsvpsCsv {
+        val page = createPage(javaClass<RsvpsCsv>())
+        page.go()
+        return page
     }
 
     override fun getDefaultDriver(): WebDriver? {

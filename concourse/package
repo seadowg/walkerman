@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Setup terminal for gradle
-export TERM=dumb
+export TERM=xterm
 
 # Build dist
 cd walkerman

@@ -34,11 +34,9 @@ class RsvpTest : FluentTest() {
         val email = "michael@fassbender.com"
         val name = "Michael Fassbender"
 
-        goTo("http://localhost:9000")
-        click("#create_rsvp")
-        fill("#rsvp_email").with(email)
-        fill("#rsvp_name").with(name)
-        submit("#rsvp_submit");
+        val newRsvpPage = onTheNewRsvpPage()
+        newRsvpPage.fillInNameAndEmail(email, name)
+        newRsvpPage.submit();
 
         goTo("http://localhost:9000/rsvps.csv")
         val csv = pageSource()
@@ -52,15 +50,10 @@ class RsvpTest : FluentTest() {
         val name = "Gate Crasher"
         val guests = 4
 
-        goTo("http://localhost:9000")
-        click("#create_rsvp")
-        fill("#rsvp_email").with(email)
-        fill("#rsvp_name").with(name)
-
-        find("#rsvp_guests_yes").click()
-        fill("#rsvp_guests").with(guests.toString())
-
-        submit("#rsvp_submit");
+        val newRsvpPage = onTheNewRsvpPage()
+        newRsvpPage.fillInNameAndEmail(email, name)
+        newRsvpPage.addExtraGuests(guests)
+        newRsvpPage.submit()
 
         goTo("http://localhost:9000/rsvps.csv")
         val csv = pageSource()
@@ -74,17 +67,11 @@ class RsvpTest : FluentTest() {
         val name = "Billy No-Mates"
         val guests = 7
 
-        goTo("http://localhost:9000")
-        click("#create_rsvp")
-        fill("#rsvp_email").with(email)
-        fill("#rsvp_name").with(name)
-
-        find("#rsvp_guests_yes").click()
-        fill("#rsvp_guests").with(guests.toString())
-
-        find("#rsvp_guests_no").click()
-
-        submit("#rsvp_submit");
+        val newRsvpPage = onTheNewRsvpPage()
+        newRsvpPage.fillInNameAndEmail(email, name)
+        newRsvpPage.addExtraGuests(guests)
+        newRsvpPage.removeExtraGuests()
+        newRsvpPage.submit()
 
         goTo("http://localhost:9000/rsvps.csv")
         val csv = pageSource()
@@ -97,19 +84,21 @@ class RsvpTest : FluentTest() {
         val email = "repeatoffender@forgetful.com"
         val name = "James Forgetful"
 
-        goTo("http://localhost:9000")
-        click("#create_rsvp")
-        fill("#rsvp_email").with(email)
-        fill("#rsvp_name").with(name)
-        submit("#rsvp_submit");
+        val firstNewRsvpPage = onTheNewRsvpPage()
+        firstNewRsvpPage.fillInNameAndEmail(email, name)
+        firstNewRsvpPage.submit()
 
-        goTo("http://localhost:9000")
-        click("#create_rsvp")
-        fill("#rsvp_email").with(email)
-        fill("#rsvp_name").with(name)
-        submit("#rsvp_submit");
+        val secondNewRsvpPage = onTheNewRsvpPage()
+        secondNewRsvpPage.fillInNameAndEmail(email, name)
+        secondNewRsvpPage.submit()
 
         assertThat(pageSource()).contains("already RSVP'd with that email")
+    }
+
+    private fun onTheNewRsvpPage(): NewRsvpPage {
+        val newRsvpPage = createPage(javaClass<NewRsvpPage>())
+        newRsvpPage.go()
+        return newRsvpPage
     }
 
     override fun getDefaultDriver(): WebDriver? {

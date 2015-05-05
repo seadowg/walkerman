@@ -3,3 +3,4 @@ build
 .idea
 *.iml
 concourse/.vagrant
+concourse/pipeline.yml

@@ -1,0 +1,27 @@
+resources:
+  - name: walkerman
+    type: git
+    source:
+      uri: https://github.com/seadowg/walkerman.git
+      branch: master
+
+  - name: pws
+    type: cf
+    source:
+      api:
+      username:
+      password:
+      organization:
+      space: 
+      skip_cert_check: false
+
+jobs:
+  - name: deploy
+    plan:
+      - get: walkerman
+      - task: package
+        file: walkerman/concourse/package.yml
+      - put: pws
+        params:
+          manifest: package/walkerman/manifest.yml
+

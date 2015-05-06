@@ -5,4 +5,4 @@ export TERM=dumb
 
 # Build dist
 cd src
-./gradlew clean distZip
+gradle clean distZip

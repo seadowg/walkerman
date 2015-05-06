@@ -3,7 +3,7 @@ platform: linux
 image: docker:///seadowg/walkerman
 
 inputs:
-  - name: walkerman
+  - name: src
 
 run:
-  path: walkerman/concourse/package
+  path: src/concourse/package

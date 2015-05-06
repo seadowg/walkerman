@@ -4,5 +4,5 @@
 export TERM=dumb
 
 # Build dist
-cd walkerman
+cd src
 ./gradlew clean distZip

@@ -60,5 +60,9 @@ class Server(val port: Int) {
         get("/rsvps.csv", { req, res ->
             RsvpController(res).csvIndex()
         })
+
+        get("/rsvps", { req, res ->
+            RsvpController(res).index()
+        })
     }
 }

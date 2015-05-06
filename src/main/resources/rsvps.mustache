@@ -1,4 +1,30 @@
-Email, Name, Guests
-{{#rsvps}}
-{{email}}, {{name}}, {{guests}}
-{{/rsvps}}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Walkerman - 6/6/15</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/styles/tables.css">
+    <link rel="stylesheet" type="text/css" href="/styles/app.css">
+</head>
+<body style="padding-top: 40px;">
+    <h2 class="center">Guestlist</h2>
+    <table class="pure-table center" style="margin-top: 20px;">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Guests</th>
+            </tr>
+        </thead>
+
+        {{#rsvps}}
+            <tr>
+                <td>{{email}}</td>
+                <td>{{name}}</td>
+                <td>{{guests}}</td>
+            </tr>
+        {{/rsvps}}
+    </table>
+</body>
+</html>

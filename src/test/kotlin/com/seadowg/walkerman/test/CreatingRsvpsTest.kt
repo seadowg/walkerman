@@ -3,6 +3,9 @@ package com.seadowg.walkerman.test
 import com.seadowg.walkerman.application.main
 import com.seadowg.walkerman.test.page.NewRsvpPage
 import com.seadowg.walkerman.test.page.RsvpsCsv
+import com.seadowg.walkerman.test.support.bootWalkermanApp
+import com.seadowg.walkerman.test.support.clearDatabase
+import com.seadowg.walkerman.test.support.shutdownWalkermanApp
 import org.fluentlenium.adapter.FluentTest
 import org.junit.After
 import org.junit.Before
@@ -21,7 +24,7 @@ class CreatingRsvpsTest : FluentTest() {
     }
 
     After fun teardown() {
-        SparkBase.stop();
+        shutdownWalkermanApp()
     }
 
     Test fun canRsvp() {
@@ -90,19 +93,6 @@ class CreatingRsvpsTest : FluentTest() {
         val page = createPage(javaClass<RsvpsCsv>())
         page.go()
         return page
-    }
-
-    private fun clearDatabase() {
-        val dataSource = PGPoolingDataSource()
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/walkerman")
-
-        DBI(dataSource).open().use { db ->
-            db.createStatement("delete from rsvps").execute()
-        }
-    }
-
-    private fun bootWalkermanApp() {
-        main(array<String>())
     }
 
     override fun getDefaultDriver(): WebDriver? {

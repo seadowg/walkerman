@@ -11,7 +11,7 @@ class RsvpController(val response: Response) {
         }
 
         response.type("text/csv")
-        return mustache.renderTemplate("rsvps", mapOf("rsvps" to rsvps))
+        return mustache.renderTemplate("rsvps.csv", mapOf("rsvps" to rsvps))
     }
 
     fun new(): String {
@@ -27,6 +27,14 @@ class RsvpController(val response: Response) {
             rsvpRepository.create(email, name, extraGuests)
             response.redirect("/rsvps/success")
         }
+    }
+
+    fun index(): Any {
+        val rsvps = RsvpRepository(dataSource).fetchAll().map { rsvp ->
+            mapOf("email" to rsvp.email, "name" to rsvp.name, "guests" to rsvp.guest)
+        }
+
+        return mustache.renderTemplate("rsvps", mapOf("rsvps" to rsvps))
     }
 
     fun createSuccess(): String {

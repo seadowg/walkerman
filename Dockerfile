@@ -17,3 +17,9 @@ RUN wget https://services.gradle.org/distributions/gradle-2.2.1-all.zip && \
 # Set Appropriate Environmental Variables
 ENV GRADLE_HOME /usr/bin/gradle
 ENV PATH $PATH:$GRADLE_HOME/bin
+
+RUN mkdir /tmp/gradle-wrapper
+WORKDIR /tmp/gradle-wrapper
+RUN gradle wrapper
+RUN ./gradlew
+

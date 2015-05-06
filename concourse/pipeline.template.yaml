@@ -1,5 +1,5 @@
 resources:
-  - name: walkerman
+  - name: src
     type: git
     source:
       uri: https://github.com/seadowg/walkerman.git
@@ -18,10 +18,10 @@ resources:
 jobs:
   - name: deploy
     plan:
-      - get: walkerman
+      - get: src
       - task: package
-        file: walkerman/concourse/package.yml
+        file: src/concourse/package.yml
       - put: pws
         params:
-          manifest: package/walkerman/manifest.yml
+          manifest: package/src/manifest.yml
 

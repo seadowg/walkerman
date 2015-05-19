@@ -19,6 +19,7 @@ jobs:
   - name: deploy
     plan:
       - get: src
+        resource: src
       - task: package
         file: src/concourse/package.yml
       - put: pws

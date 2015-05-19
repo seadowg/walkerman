@@ -1,6 +1,6 @@
 platform: linux
 
-image: docker:///seadowg/walkerman
+image: docker:///seadowg/walkerman#walkerman-base
 
 inputs:
   - name: src

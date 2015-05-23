@@ -36,6 +36,10 @@ class Server(val port: Int) {
             renderTemplate("hospitality")
         })
 
+        get("/general", { req, res ->
+            renderTemplate("general")
+        })
+
         get("/rsvps/new", { req, res ->
             RsvpController(res).new()
         })

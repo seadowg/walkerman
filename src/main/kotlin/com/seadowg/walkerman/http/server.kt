@@ -24,8 +24,8 @@ class Server(val port: Int) {
             renderTemplate("home")
         })
 
-        get("/lineup", { req, res ->
-            renderTemplate("lineup")
+        get("/info", { req, res ->
+            renderTemplate("info")
         })
 
         get("/rsvps/new", { req, res ->

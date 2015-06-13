@@ -17,7 +17,7 @@ class Environment(val systemEnv: Map<String, String>) {
 
     fun jdbcUserInfo(): UserInfo? {
         val dbUri = URI.create(elephantSqlUriString(System.getenv()) ?: "postgres://localhost:5432/walkerman")
-        val userAndPassword = dbUri.getUserInfo()?.split(":")
+        val userAndPassword = dbUri.getUserInfo()?.splitBy(":")
 
         if (userAndPassword != null) {
             return UserInfo(userAndPassword.get(0), userAndPassword.get(1))

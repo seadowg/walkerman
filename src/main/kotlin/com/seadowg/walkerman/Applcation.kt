@@ -11,22 +11,25 @@ import com.seadowg.walkerman.database.Database
 import com.seadowg.walkerman.Environment
 import com.seadowg.walkerman.server.Server
 import com.seadowg.walkerman.database.UserInfo
+import com.seadowg.walkerman.rsvp.RsvpApp
 
 class Application(val env: Environment) {
-  fun run() {
-    val database = Database(env.jdbcUri(), env.jdbcUserInfo())
-    database.migrate()
+    fun run() {
+        val database = Database(env.jdbcUri(), env.jdbcUserInfo())
+        database.migrate()
 
-    val server = Server(env.port())
-    server.loadRoutes()
-  }
+        val server = Server(env.port())
+
+        server.loadRoutes()
+        RsvpApp().load()
+    }
 }
 
 public fun main(args: Array<String>) {
-  val env = Environment(System.getenv())
+    val env = Environment(System.getenv())
 
-  val app = Application(env)
-  app.run()
+    val app = Application(env)
+    app.run()
 }
 
 

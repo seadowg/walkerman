@@ -16,7 +16,7 @@ public fun clearDatabase() {
 }
 
 public fun bootWalkermanApp() {
-    main(array<String>())
+    main(arrayOf<String>())
 }
 
 public fun shutdownWalkermanApp() {

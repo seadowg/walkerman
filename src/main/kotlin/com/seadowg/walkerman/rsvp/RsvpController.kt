@@ -16,7 +16,7 @@ class RsvpController(val eventLink: String, val response: Response) {
     }
 
     fun new(): String {
-        return renderTemplate("rsvps_new")
+        return renderTemplate("rsvps_new", mapOf("eventLink" to eventLink))
     }
 
     fun create(email: String, name: String, extraGuests: Int): Unit {

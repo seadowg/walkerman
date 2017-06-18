@@ -21,7 +21,11 @@ class Server(val port: Int) {
 
     fun loadRoutes() {
         get("/", { req, res ->
-            renderTemplate("home")
+            res.redirect("/events/2015")
+        })
+
+        get("/events/:eventLink", { req, res ->
+            renderTemplate("home", mapOf("eventLink" to req.params("eventLink")))
         })
 
         get("/info", { req, res ->

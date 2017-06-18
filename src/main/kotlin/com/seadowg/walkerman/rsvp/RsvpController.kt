@@ -1,13 +1,13 @@
 package com.seadowg.walkerman.rsvp
 
+import com.seadowg.walkerman.database.Database
 import spark.Response
 import com.seadowg.walkerman.mustache.renderTemplate
-import com.seadowg.walkerman.database.dataSource
 
-class RsvpController(val eventLink: String, val response: Response) {
+class RsvpController(val eventLink: String, val response: Response, val database: Database) {
 
     fun csvIndex(): String {
-        val rsvps = RsvpRepository(eventLink, dataSource).fetchAll().map { rsvp ->
+        val rsvps = RsvpRepository(eventLink, database).fetchAll().map { rsvp ->
             mapOf("email" to rsvp.email, "name" to rsvp.name, "guests" to rsvp.guest)
         }
 
@@ -20,7 +20,7 @@ class RsvpController(val eventLink: String, val response: Response) {
     }
 
     fun create(email: String, name: String, extraGuests: Int): Unit {
-        val rsvpRepository = RsvpRepository(eventLink, dataSource)
+        val rsvpRepository = RsvpRepository(eventLink, database)
 
         if (rsvpRepository.exists(email)) {
             response.redirect("/events/$eventLink/rsvps/email_exists_error")
@@ -31,7 +31,7 @@ class RsvpController(val eventLink: String, val response: Response) {
     }
 
     fun index(): Any {
-        val rsvps = RsvpRepository(eventLink, dataSource).fetchAll().map { rsvp ->
+        val rsvps = RsvpRepository(eventLink, database).fetchAll().map { rsvp ->
             mapOf("email" to rsvp.email, "name" to rsvp.name, "guests" to rsvp.guest)
         }
 

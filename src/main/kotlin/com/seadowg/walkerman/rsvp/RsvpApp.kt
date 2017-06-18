@@ -1,15 +1,16 @@
 package com.seadowg.walkerman.rsvp
 
+import com.seadowg.walkerman.database.Database
 import com.seadowg.walkerman.http.NiceRequest
 import spark.Request
 import spark.Response
 import spark.Spark.get
 import spark.Spark.post
 
-class RsvpApp {
+class RsvpApp(val database: Database) {
     fun load() {
         get("/events/:eventLink/rsvps/new", { req, res ->
-            controller(req, res).new()
+            controller(req, res, database).new()
         })
 
         post("/events/:eventLink/rsvps", { req, res ->
@@ -27,30 +28,30 @@ class RsvpApp {
             }
 
             if (email != null && name != null) {
-                controller(req, res).create(email, name, extraGuests)
+                controller(req, res, database).create(email, name, extraGuests)
             }
 
             res.redirect("/rsvps/success")
         })
 
         get("/events/:eventLink/rsvps/success", { req, res ->
-            controller(req, res).createSuccess()
+            controller(req, res, database).createSuccess()
         })
 
         get("/events/:eventLink/rsvps/email_exists_error", { req, res ->
-            controller(req, res).emailExistsError()
+            controller(req, res, database).emailExistsError()
         })
 
         get("/events/:eventLink/rsvps.csv", { req, res ->
-            controller(req, res).csvIndex()
+            controller(req, res, database).csvIndex()
         })
 
         get("/events/:eventLink/rsvps", { req, res ->
-            controller(req, res).index()
+            controller(req, res, database).index()
         })
     }
 
-    private fun controller(request: Request, response: Response): RsvpController {
-        return RsvpController(request.params("eventLink"), response)
+    private fun controller(request: Request, response: Response, database: Database): RsvpController {
+        return RsvpController(request.params("eventLink"), response, database)
     }
 }

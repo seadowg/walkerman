@@ -1,10 +1,10 @@
 package com.seadowg.walkerman.rsvp
 
+import com.seadowg.walkerman.database.Database
 import org.skife.jdbi.v2.DBI
 import org.skife.jdbi.v2.Handle
-import javax.sql.DataSource
 
-class RsvpRepository(val eventLink: String, val dataSource: DataSource) {
+class RsvpRepository(val eventLink: String, val database: Database) {
 
     fun exists(email: String): Boolean {
         val eventID = getEventID(eventLink)
@@ -56,6 +56,6 @@ class RsvpRepository(val eventLink: String, val dataSource: DataSource) {
     }
 
     private fun dbConnection(): Handle {
-        return DBI(dataSource).open()
+        return database.connection()
     }
 }

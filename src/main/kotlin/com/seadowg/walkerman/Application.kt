@@ -19,7 +19,7 @@ class Application(val env: Environment) {
         val server = Server(env.port())
 
         server.loadRoutes()
-        RsvpApp().load()
+        RsvpApp(database).load()
     }
 }
 

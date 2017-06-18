@@ -6,28 +6,30 @@ import javax.sql.DataSource
 import java.net.URI
 import org.flywaydb.core.Flyway
 import com.seadowg.walkerman.database.UserInfo
-
-val dataSource = PGPoolingDataSource()
-private var connected = false
+import org.skife.jdbi.v2.DBI
+import org.skife.jdbi.v2.Handle
 
 class Database(uri: String, userInfo: UserInfo?) {
 
-    init {
-        if (!connected) {
-            if (userInfo != null) {
-                dataSource.user = userInfo.user
-                dataSource.password = userInfo.password
-            }
+    val dataSource = PGPoolingDataSource()
 
-            dataSource.url = uri
-            connected = true
+    init {
+        if (userInfo != null) {
+            dataSource.user = userInfo.user
+            dataSource.password = userInfo.password
         }
+
+        dataSource.url = uri
     }
 
     fun migrate(): Unit {
-        val flyway = Flyway();
+        val flyway = Flyway()
         flyway.dataSource = dataSource
         flyway.migrate()
+    }
+
+    fun connection(): Handle {
+        return DBI(dataSource).open()
     }
 }
 

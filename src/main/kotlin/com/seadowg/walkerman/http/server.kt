@@ -21,7 +21,7 @@ class Server(val port: Int) {
 
     fun loadRoutes() {
         get("/", { req, res ->
-            res.redirect("/events/2015")
+            res.redirect("/events/2017")
         })
 
         get("/events/:eventLink", { req, res ->

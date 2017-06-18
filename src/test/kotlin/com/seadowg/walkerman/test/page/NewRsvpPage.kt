@@ -3,8 +3,9 @@ package com.seadowg.walkerman.test.page
 import org.fluentlenium.core.FluentPage
 
 class NewRsvpPage : FluentPage() {
+
     override fun getUrl(): String {
-        return "http://localhost:9000/events/2015/rsvps/new"
+        return "http://localhost:9000/events/2017/rsvps/new"
     }
 
     fun fillInNameAndEmail(email: String, name: String) {

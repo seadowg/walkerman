@@ -4,6 +4,6 @@ import org.fluentlenium.core.FluentPage
 
 class RsvpsPage : FluentPage() {
     override fun getUrl(): String {
-        return "http://localhost:9000/events/2015/rsvps"
+        return "http://localhost:9000/events/2017/rsvps"
     }
 }

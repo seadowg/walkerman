@@ -15,16 +15,20 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 
 class ViewRsvpsTest : FluentTest() {
-    Before fun setup() {
+
+    @Before
+    fun setup() {
         bootWalkermanApp()
         clearDatabase()
     }
 
-    After fun teardown() {
+    @After
+    fun teardown() {
         shutdownWalkermanApp()
     }
 
-    Test fun showsRsvps() {
+    @Test
+    fun showsRsvps() {
         val stephen = createRsvp("stephen@curry.com", "Stephen Curry", 1)
         val james = createRsvp("james@harden.com", "James Harden", 3)
 
@@ -34,13 +38,13 @@ class ViewRsvpsTest : FluentTest() {
     }
 
     private fun onTheRsvpsPage(): RsvpsPage {
-        val page = createPage(javaClass<RsvpsPage>())
+        val page = createPage(RsvpsPage::class.java)
         page.go()
         return page
     }
 
     private fun createRsvp(email: String, name: String, totalGuests: Int): Rsvp {
-        val newRsvpPage = createPage(javaClass<NewRsvpPage>())
+        val newRsvpPage = createPage(NewRsvpPage::class.java)
         newRsvpPage.go();
 
         newRsvpPage.fillInNameAndEmail(email, name)
@@ -58,7 +62,7 @@ class ViewRsvpsTest : FluentTest() {
 
     override fun getDefaultDriver(): WebDriver? {
         val htmlUnitDriver = HtmlUnitDriver()
-        htmlUnitDriver.setJavascriptEnabled(true)
+        htmlUnitDriver.isJavascriptEnabled = true
         return htmlUnitDriver
     }
 }

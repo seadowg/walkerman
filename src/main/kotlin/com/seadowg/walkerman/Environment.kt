@@ -1,9 +1,8 @@
 package com.seadowg.walkerman
 
-import java.net.URI
-import com.seadowg.walkerman.database.dataSource
-import org.json.JSONObject
 import com.seadowg.walkerman.database.UserInfo
+import org.json.JSONObject
+import java.net.URI
 
 class Environment(val systemEnv: Map<String, String>) {
     fun port(): Int {
@@ -16,13 +15,13 @@ class Environment(val systemEnv: Map<String, String>) {
     }
 
     fun jdbcUserInfo(): UserInfo? {
-        val dbUri = URI.create(elephantSqlUriString(System.getenv()) ?: "postgres://localhost:5432/walkerman")
-        val userAndPassword = dbUri.getUserInfo()?.splitBy(":")
+        val dbUri = URI.create(elephantSqlUriString(System.getenv()) ?: "postgres://postgres:mysecretpassword@localhost:5432/walkerman")
+        val userAndPassword = dbUri.userInfo?.split(":")
 
         if (userAndPassword != null) {
-            return UserInfo(userAndPassword.get(0), userAndPassword.get(1))
+            return UserInfo(userAndPassword[0], userAndPassword[1])
         } else {
-            return null;
+            return null
         }
     }
 

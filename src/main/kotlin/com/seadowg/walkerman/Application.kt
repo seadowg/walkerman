@@ -1,15 +1,13 @@
-package com.seadowg.walkerman.application
+package com.seadowg.walkerman
 
 import spark.Spark.*
 import spark.SparkBase.port
 import spark.SparkBase.staticFileLocation;
 import com.github.mustachejava.DefaultMustacheFactory
 import java.io.StringWriter
-import com.seadowg.walkerman.server
-import com.seadowg.walkerman.database
+import com.seadowg.walkerman.server.Server
 import com.seadowg.walkerman.database.Database
 import com.seadowg.walkerman.Environment
-import com.seadowg.walkerman.server.Server
 import com.seadowg.walkerman.database.UserInfo
 import com.seadowg.walkerman.rsvp.RsvpApp
 

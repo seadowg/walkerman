@@ -8,20 +8,25 @@ import org.flywaydb.core.Flyway
 import com.seadowg.walkerman.database.UserInfo
 
 val dataSource = PGPoolingDataSource()
+private var connected = false
 
-class Database(val uri: String, val userInfo: UserInfo?) {
+class Database(uri: String, userInfo: UserInfo?) {
+
     init {
-        dataSource.setUrl(uri)
+        if (!connected) {
+            if (userInfo != null) {
+                dataSource.user = userInfo.user
+                dataSource.password = userInfo.password
+            }
 
-        if (userInfo != null) {
-            dataSource.setUser(userInfo.user)
-            dataSource.setPassword(userInfo.password)
+            dataSource.url = uri
+            connected = true
         }
     }
 
     fun migrate(): Unit {
         val flyway = Flyway();
-        flyway.setDataSource(dataSource)
+        flyway.dataSource = dataSource
         flyway.migrate()
     }
 }

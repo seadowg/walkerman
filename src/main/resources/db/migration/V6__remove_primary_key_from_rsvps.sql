@@ -1,0 +1,1 @@
+ALTER TABLE rsvps DROP CONSTRAINT rsvps_pkey;

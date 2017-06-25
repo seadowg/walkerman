@@ -1,9 +1,0 @@
-platform: linux
-
-image: docker:///seadowg/walkerman#walkerman-base
-
-inputs:
-  - name: src
-
-run:
-  path: src/concourse/package

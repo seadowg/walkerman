@@ -1,8 +1,0 @@
-#!/bin/bash
-
-# Setup terminal for gradle
-export TERM=dumb
-
-# Build dist
-cd src
-gradle clean distZip

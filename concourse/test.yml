@@ -1,9 +1,0 @@
-platform: linux
-
-image: docker:///seadowg/walkerman
-
-inputs:
-  - name: walkerman
-
-run:
-  path: walkerman/concourse/test
